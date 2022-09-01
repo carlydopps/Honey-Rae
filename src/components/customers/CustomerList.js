@@ -3,6 +3,7 @@ import { Customer } from "./Customer"
 import "./Customers.css"
 
 export const CustomerList = () => {
+    
     const [customers, updateCustomers] = useState([])
 
     useEffect(
