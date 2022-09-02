@@ -1,37 +1,36 @@
-import { useState } from "react"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { useNavigate, useParams } from "react-router-dom"
 
-export const TicketForm = () => {
+export const TicketEdit = () => {
 
-    const [ticket, update] = useState({
+    const {ticketId} = useParams()
+    const [ticket, updateTicket] = useState({
         description: "",
         emergency: false
     })
 
    const navigate = useNavigate()
 
-    const localHoneyUser = localStorage.getItem("honey_user")
-    const honeyUserObject = JSON.parse(localHoneyUser)
-
+    useEffect(
+        () => {
+            fetch(`http://localhost:8088/serviceTickets/${ticketId}`)
+            .then(res => res.json())
+            .then((data) => {
+                updateTicket(data)
+            })
+        },
+        [ticketId]
+    )
     
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
-        
-        // TODO: Create the object to be saved to the API
-        const ticketToSendToAPI = {
-            userId: honeyUserObject.id,
-            description: ticket.description,
-            emergency: ticket.emergency,
-            dateCompleted: "",
-        }
 
-        // TODO: Perform the fetch() to POST the object to the API
-        return fetch(`http://localhost:8088/serviceTickets`, {
-            method: "POST",
+        return fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(ticketToSendToAPI)
+            body: JSON.stringify(ticket)
         })
             .then(res => res.json())
             .then(() => {
@@ -39,7 +38,7 @@ export const TicketForm = () => {
             })
     }
 
-    return (
+    return ( 
         <form className="ticketForm">
             <h2 className="ticketForm__title">New Service Ticket</h2>
             <fieldset>
@@ -55,7 +54,7 @@ export const TicketForm = () => {
                             (event) => {
                                 const copy = {...ticket}
                                 copy.description = event.target.value
-                                update(copy)
+                                updateTicket(copy)
                             }
                         } />
                 </div>
@@ -69,7 +68,7 @@ export const TicketForm = () => {
                             (event) => {
                                 const copy = {...ticket}
                                 copy.emergency = event.target.checked
-                                update(copy)
+                                updateTicket(copy)
                             }
                         } />
                 </div>
@@ -77,7 +76,7 @@ export const TicketForm = () => {
             <button 
                 onClick={(clickEvent) => handleSaveButtonClick(clickEvent)}
                 className="btn btn-primary">
-                Submit Ticket
+                Save
             </button>
         </form>
     )

@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom"
 import "./NavBar.css"
 
 export const EmployeeNav = () => {
-    
+
     const navigate = useNavigate()
 
     return (
@@ -15,6 +15,9 @@ export const EmployeeNav = () => {
             </li>
             <li className="navbar__item active">
                 <Link className="navbar__link" to="/customers">Customers</Link>
+            </li>
+            <li className="navbar__item active">
+                <Link className="navbar__link" to="/profile">Profile</Link>
             </li>
             {
                 localStorage.getItem("honey_user")
