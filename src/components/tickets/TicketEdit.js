@@ -15,9 +15,7 @@ export const TicketEdit = () => {
         () => {
             fetch(`http://localhost:8088/serviceTickets/${ticketId}`)
             .then(res => res.json())
-            .then((data) => {
-                updateTicket(data)
-            })
+            .then(data => updateTicket(data))
         },
         [ticketId]
     )
@@ -33,9 +31,7 @@ export const TicketEdit = () => {
             body: JSON.stringify(ticket)
         })
             .then(res => res.json())
-            .then(() => {
-                navigate("/tickets")
-            })
+            .then(() => navigate("/tickets"))
     }
 
     return ( 

@@ -33,9 +33,7 @@ export const CustomerForm = () => {
             body: JSON.stringify(profile)
         }
             .then(res => res.json())
-            .then(() => {
-
-            })
+            .then(() => {})
     }
 
     return (

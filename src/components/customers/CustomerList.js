@@ -10,9 +10,7 @@ export const CustomerList = () => {
         () => {
             fetch(`http://localhost:8088/users?isStaff=false`)
                 .then(res => res.json())
-                .then((customerArray) => {
-                    updateCustomers(customerArray)
-                })
+                .then(customerArray => updateCustomers(customerArray))
         },
         []
     )

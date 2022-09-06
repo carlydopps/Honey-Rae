@@ -27,9 +27,7 @@ export const TicketList = ({ searchTermState }) => {
     const getAllTickets = () => {
         fetch(`http://localhost:8088/serviceTickets?_embed=employeeTickets`)
                 .then(res => res.json())
-                .then((ticketArray) => {
-                    setTickets(ticketArray)
-                })
+                .then(ticketArray => setTickets(ticketArray))
     }
 
 
@@ -39,9 +37,7 @@ export const TicketList = ({ searchTermState }) => {
 
             fetch(`http://localhost:8088/employees?_expand=user`)
             .then(res => res.json())
-            .then((employeeArray) => {
-                setEmployees(employeeArray)
-            })
+            .then(employeeArray => setEmployees(employeeArray))
         },
         [] // When this array is empty, you are observing initial component state
     )

@@ -41,9 +41,7 @@ export const EmployeeForm = () => {
             body: JSON.stringify(profile)
         })
             .then(res => res.json())
-            .then(() => {
-                setFeedback("Employee profile successfully saved")
-            })
+            .then(() => setFeedback("Employee profile successfully saved"))
     };
 
     return (<>

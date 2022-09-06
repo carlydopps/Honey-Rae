@@ -33,9 +33,7 @@ export const TicketForm = () => {
             body: JSON.stringify(ticketToSendToAPI)
         })
             .then(res => res.json())
-            .then(() => {
-                navigate("/tickets")
-            })
+            .then(() => navigate("/tickets"))
     }
 
     return (

@@ -9,9 +9,7 @@ export const EmployeeList = () => {
         () => {
             fetch(`http://localhost:8088/users?isStaff=true`)
                 .then(res => res.json())
-                .then((employeeArray) => {
-                    setEmployees(employeeArray)
-                })
+                .then(employeeArray => setEmployees(employeeArray))
         },
         []
     )
