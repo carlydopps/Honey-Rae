@@ -24,13 +24,18 @@ export const TicketList = ({ searchTermState }) => {
         [searchTermState]
     )
 
-    useEffect(
-        () => {
-            fetch(`http://localhost:8088/serviceTickets?_embed=employeeTickets`)
+    const getAllTickets = () => {
+        fetch(`http://localhost:8088/serviceTickets?_embed=employeeTickets`)
                 .then(res => res.json())
                 .then((ticketArray) => {
                     setTickets(ticketArray)
                 })
+    }
+
+
+    useEffect(
+        () => {
+            getAllTickets() 
 
             fetch(`http://localhost:8088/employees?_expand=user`)
             .then(res => res.json())
@@ -97,7 +102,11 @@ export const TicketList = ({ searchTermState }) => {
         <article className="tickets">
             {
                 filteredTickets.map(
-                    (ticket) => <Ticket employees={employees} isStaff={honeyUserObject.staff} ticketObj={ticket} key={`ticket--${ticket.id}`}/>)
+                    (ticket) => <Ticket employees={employees} 
+                        getAllTickets={getAllTickets}
+                        currentUser={honeyUserObject} 
+                        ticketObj={ticket} 
+                        key={`ticket--${ticket.id}`}/>)
             }
         </article>
     </>

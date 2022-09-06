@@ -25,7 +25,6 @@ export const TicketForm = () => {
             dateCompleted: "",
         }
 
-        // TODO: Perform the fetch() to POST the object to the API
         return fetch(`http://localhost:8088/serviceTickets`, {
             method: "POST",
             headers: {
