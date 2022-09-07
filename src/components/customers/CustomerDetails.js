@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
+import { getSpecificCustomer } from "../ApiManager"
 
 export const CustomerDetails = () => {
     
@@ -8,12 +9,11 @@ export const CustomerDetails = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/customers?_expand=user&userId=${customerId}`)
-            .then(res => res.json())
-            .then((data) => {
-                const singleCustomer = data[0]
-                updateCustomer(singleCustomer)
-            })
+            getSpecificCustomer(customerId)
+                .then((data) => {
+                    const singleCustomer = data[0]
+                    updateCustomer(singleCustomer)
+                })
         },
         [customerId]
     )

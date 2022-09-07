@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import { postTicket } from "../ApiManager"
 
 export const TicketForm = () => {
 
@@ -17,7 +18,6 @@ export const TicketForm = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
         
-        // TODO: Create the object to be saved to the API
         const ticketToSendToAPI = {
             userId: honeyUserObject.id,
             description: ticket.description,
@@ -25,14 +25,7 @@ export const TicketForm = () => {
             dateCompleted: "",
         }
 
-        return fetch(`http://localhost:8088/serviceTickets`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(ticketToSendToAPI)
-        })
-            .then(res => res.json())
+        return postTicket(ticketToSendToAPI)
             .then(() => navigate("/tickets"))
     }
 

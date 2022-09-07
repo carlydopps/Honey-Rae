@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { getEmployeeUsers } from "../ApiManager"
 import { Employee } from "./Employee"
 import "./Employees.css"
 
@@ -7,8 +8,7 @@ export const EmployeeList = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/users?isStaff=true`)
-                .then(res => res.json())
+            getEmployeeUsers()
                 .then(employeeArray => setEmployees(employeeArray))
         },
         []

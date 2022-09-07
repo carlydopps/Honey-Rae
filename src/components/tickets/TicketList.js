@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
+import { getEmployees, getTickets } from "../ApiManager"
 import { Ticket } from "./Ticket"
 import "./Tickets.css"
 
@@ -25,9 +26,8 @@ export const TicketList = ({ searchTermState }) => {
     )
 
     const getAllTickets = () => {
-        fetch(`http://localhost:8088/serviceTickets?_embed=employeeTickets`)
-                .then(res => res.json())
-                .then(ticketArray => setTickets(ticketArray))
+        getTickets()
+            .then(ticketArray => setTickets(ticketArray))
     }
 
 
@@ -35,9 +35,8 @@ export const TicketList = ({ searchTermState }) => {
         () => {
             getAllTickets() 
 
-            fetch(`http://localhost:8088/employees?_expand=user`)
-            .then(res => res.json())
-            .then(employeeArray => setEmployees(employeeArray))
+            getEmployees()
+                .then(employeeArray => setEmployees(employeeArray))
         },
         [] // When this array is empty, you are observing initial component state
     )

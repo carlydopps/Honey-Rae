@@ -26,7 +26,7 @@ export const Ticket = ({ticketObj, currentUser, employees, getAllTickets}) => {
                     })
                 })
                     .then(res => res.json())
-                    .then(() => getAllTickets())
+                    .then(getAllTickets)
             }}
         >Claim</button>
         } else {
@@ -48,7 +48,7 @@ export const Ticket = ({ticketObj, currentUser, employees, getAllTickets}) => {
                 fetch(`http://localhost:8088/serviceTickets/${ticketObj.id}`, {
                     method: "DELETE"
                 })
-                .then(() => getAllTickets())
+                .then(getAllTickets)
 
             }} className="ticket__delete">Delete</button>
         } else {
@@ -58,7 +58,7 @@ export const Ticket = ({ticketObj, currentUser, employees, getAllTickets}) => {
 
     const closeTicket = () => {
         const copy = {
-            userId: ticketObj.id,
+            userId: ticketObj.userId,
             description: ticketObj.description,
             emergency: ticketObj.emergency,
             dateCompleted: new Date()

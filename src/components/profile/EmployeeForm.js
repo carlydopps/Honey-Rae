@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { getLoggedInEmployee, saveEmployeeProfile } from "../ApiManager"
 
 export const EmployeeForm = () => {
 
@@ -20,9 +21,7 @@ export const EmployeeForm = () => {
     }, [feedback])
 
     useEffect(() => {
-        // This is saying we want the employee object whose userId matches the id of the user object that is currently logged in
-        fetch(`http://localhost:8088/employees?userId=${honeyUserObject.id}`)
-            .then(res => res.json())
+        getLoggedInEmployee(honeyUserObject)
             .then((data) => {
                 const employeeObj = data[0]
                 updateProfile(employeeObj)
@@ -33,14 +32,7 @@ export const EmployeeForm = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
-        return fetch(`http://localhost:8088/employees/${profile.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(profile)
-        })
-            .then(res => res.json())
+        return saveEmployeeProfile(profile)
             .then(() => setFeedback("Employee profile successfully saved"))
     };
 

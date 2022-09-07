@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react"
+import { getLoggedInCustomer, saveCustomerProfile } from "../ApiManager"
 
 export const CustomerForm = () => {
     
+    const [feedback, setFeedback] = useState("")
     const [profile, updateProfile] = useState({
         address: "",
         phoneNumber: "",
@@ -11,32 +13,36 @@ export const CustomerForm = () => {
     const localHoneyUser = localStorage.getItem("honey_user")
     const honeyUserObject = JSON.parse(localHoneyUser)
 
-    useEffect(() => {
 
-        fetch(`http://localhost:8088/customers?userId=${honeyUserObject.id}`)
-        .then(res => res.json())
-        .then((data) => {
-            const customerObj = data[0]
-            updateProfile(customerObj)
-        })
+    useEffect(() => {
+        if (feedback !== "") {
+            // Clear feedback to make entire element disappear after 3 seconds
+            setTimeout(() => setFeedback(""), 3000);
+        }
+    }, [feedback])
+
+
+    useEffect(
+        () => {
+            getLoggedInCustomer(honeyUserObject)
+                .then((data) => {
+                    const customerObj = data[0]
+                    updateProfile(customerObj)
+                })
     },[]
     )
 
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
-        return fetch(`http://localhost:8088/customers/${profile.id}`), {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(profile)
-        }
-            .then(res => res.json())
-            .then(() => {})
+        return saveCustomerProfile(profile)
+            .then(() => setFeedback("Customer profile successfully saved"))
     }
 
-    return (
+    return (<>
+        <div className={`${feedback.includes("Error") ? "error" : "feedback"} ${feedback === "" ? "invisible" : "visible"}`}>
+        {feedback}
+        </div>
         <form className="profile">
             <h2 className="profile__title">New Service Ticket</h2>
             <fieldset>
@@ -77,5 +83,6 @@ export const CustomerForm = () => {
                 Save Profile
             </button>
         </form>
+        </>
     )
 }

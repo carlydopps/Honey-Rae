@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
+import { getSpecificTicket, saveTicket } from "../ApiManager"
 
 export const TicketEdit = () => {
 
@@ -13,9 +14,8 @@ export const TicketEdit = () => {
 
     useEffect(
         () => {
-            fetch(`http://localhost:8088/serviceTickets/${ticketId}`)
-            .then(res => res.json())
-            .then(data => updateTicket(data))
+            getSpecificTicket(ticketId)
+                .then(data => updateTicket(data))
         },
         [ticketId]
     )
@@ -23,14 +23,7 @@ export const TicketEdit = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
-        return fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(ticket)
-        })
-            .then(res => res.json())
+        return saveTicket(ticket)
             .then(() => navigate("/tickets"))
     }
 
