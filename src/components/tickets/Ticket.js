@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { deleteTicket, getEmployeeTickets, saveClosedTicket } from "../ApiManager"
 
 export const Ticket = ({ticketObj, currentUser, employees, getAllTickets}) => {
 
@@ -15,17 +16,7 @@ export const Ticket = ({ticketObj, currentUser, employees, getAllTickets}) => {
         if (currentUser.staff) {
             return <button
             onClick={() => {
-                fetch(`http://localhost:8088/employeeTickets`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        employeeId: userEmployee.id,
-                        serviceTicketId: ticketObj.id
-                    })
-                })
-                    .then(res => res.json())
+                getEmployeeTickets(userEmployee, ticketObj)
                     .then(getAllTickets)
             }}
         >Claim</button>
@@ -45,10 +36,8 @@ export const Ticket = ({ticketObj, currentUser, employees, getAllTickets}) => {
     const deleteButton = () => {
         if (!currentUser.staff) {
             return <button onClick={() => {
-                fetch(`http://localhost:8088/serviceTickets/${ticketObj.id}`, {
-                    method: "DELETE"
-                })
-                .then(getAllTickets)
+                deleteTicket(ticketObj)
+                    .then(getAllTickets)
 
             }} className="ticket__delete">Delete</button>
         } else {
@@ -64,14 +53,7 @@ export const Ticket = ({ticketObj, currentUser, employees, getAllTickets}) => {
             dateCompleted: new Date()
         }
 
-        return fetch(`http://localhost:8088/serviceTickets/${ticketObj.id}`, {
-            method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(copy)
-        })
-            .then(res => res.json())
+        return saveClosedTicket(ticketObj, copy)
             .then(getAllTickets)
     }
 

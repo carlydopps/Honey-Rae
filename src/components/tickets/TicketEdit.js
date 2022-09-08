@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { getSpecificTicket, saveTicket } from "../ApiManager"
+import { getSpecificTicket, saveEditedTicket } from "../ApiManager"
 
 export const TicketEdit = () => {
 
@@ -23,7 +23,7 @@ export const TicketEdit = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
-        return saveTicket(ticket)
+        return saveEditedTicket(ticket)
             .then(() => navigate("/tickets"))
     }
 

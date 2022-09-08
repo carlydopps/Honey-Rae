@@ -25,7 +25,7 @@ export const TicketForm = () => {
             dateCompleted: "",
         }
 
-        return postTicket(ticketToSendToAPI)
+        postTicket(ticketToSendToAPI)
             .then(() => navigate("/tickets"))
     }
 

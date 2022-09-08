@@ -25,13 +25,13 @@ export const getLoggedInCustomer = (honeyUserObject) => {
 }
 
 export const saveCustomerProfile = (profile) => {
-    return fetch(`http://localhost:8088/customers/${profile.id}`), {
+    return fetch(`http://localhost:8088/customers/${profile.id}`, {
         method: "PUT",
         headers: {
             "Content-Type": "application/json"
         },
         body: JSON.stringify(profile)
-    }
+    })
         .then(res => res.json())
 }
 
@@ -78,7 +78,21 @@ export const getSpecificTicket = (ticketId) => {
         .then(res => res.json())
 }
 
-export const saveTicket = (ticket) => {
+export const getEmployeeTickets = (userEmployee, ticketObj) => {
+    return fetch(`http://localhost:8088/employeeTickets`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            employeeId: userEmployee.id,
+            serviceTicketId: ticketObj.id
+        })
+    })
+        .then(res => res.json())
+}
+
+export const saveEditedTicket = (ticket) => {
     return fetch(`http://localhost:8088/serviceTickets/${ticket.id}`, {
         method: "PUT",
         headers: {
@@ -87,6 +101,16 @@ export const saveTicket = (ticket) => {
         body: JSON.stringify(ticket)
     })
         .then(res => res.json())
+}
+
+export const saveClosedTicket = (ticketObj, copy) => {
+    return fetch(`http://localhost:8088/serviceTickets/${ticketObj.id}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(copy)
+        })
 }
 
 export const postTicket = (ticketToSendToAPI) => {
@@ -98,4 +122,10 @@ export const postTicket = (ticketToSendToAPI) => {
             body: JSON.stringify(ticketToSendToAPI)
         })
             .then(res => res.json())
+}
+
+export const deleteTicket = (ticketObj) => {
+    return fetch(`http://localhost:8088/serviceTickets/${ticketObj.id}`, {
+        method: "DELETE"
+    })
 }

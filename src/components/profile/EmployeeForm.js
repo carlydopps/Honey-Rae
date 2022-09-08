@@ -32,7 +32,7 @@ export const EmployeeForm = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
-        return saveEmployeeProfile(profile)
+        saveEmployeeProfile(profile)
             .then(() => setFeedback("Employee profile successfully saved"))
     };
 
@@ -53,7 +53,7 @@ export const EmployeeForm = () => {
                         onChange={
                             (evt) => {
                                 const copy = { ...profile }
-                                copy.speciality = evt.target.value
+                                copy.specialty = evt.target.value
                                 updateProfile(copy)
                             }
                         } />

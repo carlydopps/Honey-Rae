@@ -35,7 +35,7 @@ export const CustomerForm = () => {
     const handleSaveButtonClick = (event) => {
         event.preventDefault()
 
-        return saveCustomerProfile(profile)
+        saveCustomerProfile(profile)
             .then(() => setFeedback("Customer profile successfully saved"))
     }
 
